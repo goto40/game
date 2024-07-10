@@ -2,7 +2,7 @@
 
 (function (self: ServiceWorkerGlobalScope) { // hard cast; https://github.com/microsoft/TypeScript/issues/14877
 
-  const cacheName = 'transaction-logger';
+  const cacheName = 'game';
   const filesToCache = [
     './',
     './index.html',

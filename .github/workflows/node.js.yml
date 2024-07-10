@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        run: npm run build -- --base=/TransactionLogger/
+        run: npm run build -- --base=/game/
       # - name: Test
       #   run: npm run test-run
       - name: Setup Pages
