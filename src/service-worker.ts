@@ -8,6 +8,7 @@
     './index.html',
     './favicon.png',
     './style.css',
+    './manifest.json',
     './assets/index.js',
     './assets/box.png',
     './assets/bg.png',
