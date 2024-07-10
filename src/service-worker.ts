@@ -7,6 +7,7 @@
     './',
     './index.html',
     './favicon.png',
+    './chili-256.png',
     './style.css',
     './manifest.json',
     './assets/index.js',
