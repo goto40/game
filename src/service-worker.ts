@@ -13,6 +13,7 @@
     './assets/index.js',
     './assets/box.png',
     './assets/bg.png',
+    './assets/bg2.png',
     './assets/phaser.js',
   ];
   

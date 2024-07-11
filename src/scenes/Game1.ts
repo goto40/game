@@ -1,6 +1,6 @@
 import { Scene } from 'phaser';
 
-export class Game extends Scene
+export class Game1 extends Scene
 {
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
@@ -9,7 +9,7 @@ export class Game extends Scene
     constructor ()
     {
         super({
-            key: "Game",
+            key: "Game1",
             physics: {
                 default: 'matter',
                 matter: {
