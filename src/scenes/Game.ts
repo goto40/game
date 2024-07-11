@@ -31,30 +31,33 @@ export class Game extends Scene
     {
         this.camera = this.cameras.main;
         this.camera.setBackgroundColor(0x00ff00);
+        const w = this.camera.width;
+        const h = this.camera.height;
+        const r = 50;
 
-        this.background = this.add.image(512, 384, 'background');
-
+        this.background = this.add.image(w/2, h/2, 'background');
+        this.background.setScale(1.25, 2.5);
         
-        const left = this.add.rectangle(0, 768/2, 50, 768, 0x663300);
+        const left = this.add.rectangle(0, h/2, 50, h, 0x663300);
         this.matter.add.gameObject(left, {isStatic: true});
-        const right = this.add.rectangle(1024, 768/2, 50, 768, 0x662200);
+        const right = this.add.rectangle(w, h/2, 50, h, 0x662200);
         this.matter.add.gameObject(right, {isStatic: true});
-        const ground = this.add.rectangle(1024/2, 760, 1024, 50, 0x005500);
+        const ground = this.add.rectangle(w/2, h-20, w, 50, 0x005500);
         this.matter.add.gameObject(ground, {isStatic: true});
 
-        const center = this.add.rectangle(512, 2*768/5, 30, 400, 0x550000);
+        const center = this.add.rectangle(w/2, 2*h/5, 30, w/2, 0x550000);
         this.matter.add.gameObject(center, {isStatic: true, friction: 0.1});
         center.setAngle(60.0);
 
         this.input.on('pointermove', (e: MouseEvent) => {
             if (e.buttons!==0) {
                 if (Math.random()>0.5) {
-                    const circ = this.add.circle(e.x, e.y, Math.random()*10+5, 0x777777)
+                    const circ = this.add.circle(e.x, e.y, Math.random()*r/2+r/5, 0x777777)
                     circ.setStrokeStyle(1, 0xffffff);
                     this.matter.add.gameObject(circ, {friction: 0.01});
                 }
                 else {
-                    const rect = this.add.rectangle(e.x, e.y, Math.random()*15+10, Math.random()*15+10, 0x777777)
+                    const rect = this.add.rectangle(e.x, e.y, Math.random()*r+r/2.5, Math.random()*r+r/2.5, 0x777777)
                     rect.setStrokeStyle(1, 0xffffff);
                     this.matter.add.gameObject(rect, {friction: 0.01});
                 }

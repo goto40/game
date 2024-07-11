@@ -14,7 +14,11 @@ export class MainMenu extends Scene
 
     create ()
     {
-        this.background = this.add.image(512, 384, 'background');
+        const camera = this.cameras.main;
+        const w = camera.width;
+        const h = camera.height;
+        this.background = this.add.image(w/2, h/2, 'background');
+        this.background.setScale(1.25, 2.5);
 
         this.title = this.add.text(512, 460, `Main Menu (${version})`, {
             fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
