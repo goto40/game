@@ -19,10 +19,9 @@ export class Game3 extends Scene
 
     create ()
     {
-      console.log("raw: %o", this.cache.json.get('ldtk'))
-      const parseResult = TypesSchema.safeParse(this.cache.json.get('ldtk'));
-      console.log(`error:`, parseResult.error);
-
+      const parseResult = TypesSchema.parse(this.cache.json.get('ldtk'));
+      console.log("%o", parseResult);
+     
       this.camera = this.cameras.main;
       this.camera.setBackgroundColor(0x00ff00);
       // const w = this.camera.width;
