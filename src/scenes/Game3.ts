@@ -1,5 +1,5 @@
 import { Scene } from 'phaser';
-import { LdtkJsonRootPropertiesSchema } from '../types';
+import { TypesSchema } from '../types';
 
 export class Game3 extends Scene
 {
@@ -20,7 +20,7 @@ export class Game3 extends Scene
     create ()
     {
       console.log("raw: %o", this.cache.json.get('ldtk'))
-      const parseResult = LdtkJsonRootPropertiesSchema.safeParse(this.cache.json.get('ldtk'));
+      const parseResult = TypesSchema.safeParse(this.cache.json.get('ldtk'));
       console.log(`error:`, parseResult.error);
 
       this.camera = this.cameras.main;

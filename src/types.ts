@@ -1,903 +1,698 @@
 import * as z from "zod";
 
+// Possible values: `Manual`, `AfterLoad`, `BeforeSave`, `AfterSave`
 
-export const ForcedRefsTypeSchema = z.enum([
-    "boolean",
-    "integer",
-    "null",
-    "number",
-    "object",
-    "string",
+export const WhenSchema = z.enum([
+    "AfterLoad",
+    "AfterSave",
+    "BeforeSave",
+    "Manual",
 ]);
-export type ForcedRefsType = z.infer<typeof ForcedRefsTypeSchema>;
+export type When = z.infer<typeof WhenSchema>;
 
+// Possible values: `Any`, `OnlySame`, `OnlyTags`, `OnlySpecificEntity`
 
-export const CustomCommandsTypeSchema = z.enum([
-    "array",
-    "null",
+export const AllowedRefsSchema = z.enum([
+    "Any",
+    "OnlySame",
+    "OnlySpecificEntity",
+    "OnlyTags",
 ]);
-export type CustomCommandsType = z.infer<typeof CustomCommandsTypeSchema>;
+export type AllowedRefs = z.infer<typeof AllowedRefsSchema>;
 
-export const AppBuildIdSchema = z.object({
-    "description": z.string(),
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type AppBuildId = z.infer<typeof AppBuildIdSchema>;
+// Possible values: `Hidden`, `ValueOnly`, `NameAndValue`, `EntityTile`, `LevelTile`,
+// `Points`, `PointStar`, `PointPath`, `PointPathLoop`, `RadiusPx`, `RadiusGrid`,
+// `ArrayCountWithLabel`, `ArrayCountNoLabel`, `RefLinkBetweenPivots`,
+// `RefLinkBetweenCenters`
 
-export const ItemsValueSchema = z.object({
-    "$ref": z.string(),
-});
-export type ItemsValue = z.infer<typeof ItemsValueSchema>;
+export const EditorDisplayModeSchema = z.enum([
+    "ArrayCountNoLabel",
+    "ArrayCountWithLabel",
+    "EntityTile",
+    "Hidden",
+    "LevelTile",
+    "NameAndValue",
+    "PointPath",
+    "PointPathLoop",
+    "PointStar",
+    "Points",
+    "RadiusGrid",
+    "RadiusPx",
+    "RefLinkBetweenCenters",
+    "RefLinkBetweenPivots",
+    "ValueOnly",
+]);
+export type EditorDisplayMode = z.infer<typeof EditorDisplayModeSchema>;
 
-export const DefsSchema = z.object({
-    "description": z.string(),
-    "$ref": z.string(),
-});
-export type Defs = z.infer<typeof DefsSchema>;
+// Possible values: `Above`, `Center`, `Beneath`
 
-export const FlagsItemsSchema = z.object({
-    "enum": z.array(z.string()),
-});
-export type FlagsItems = z.infer<typeof FlagsItemsSchema>;
+export const EditorDisplayPosSchema = z.enum([
+    "Above",
+    "Beneath",
+    "Center",
+]);
+export type EditorDisplayPos = z.infer<typeof EditorDisplayPosSchema>;
 
-export const ForcedRefsSchema = z.object({
-    "description": z.string(),
-    "properties": z.record(z.string(), ItemsValueSchema),
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type ForcedRefs = z.infer<typeof ForcedRefsSchema>;
+// Possible values: `ZigZag`, `StraightArrow`, `CurvedArrow`, `ArrowsLine`, `DashedLine`
 
-export const IdentifierStyleSchema = z.object({
-    "description": z.string(),
-    "enum": z.array(z.string()),
-});
-export type IdentifierStyle = z.infer<typeof IdentifierStyleSchema>;
+export const EditorLinkStyleSchema = z.enum([
+    "ArrowsLine",
+    "CurvedArrow",
+    "DashedLine",
+    "StraightArrow",
+    "ZigZag",
+]);
+export type EditorLinkStyle = z.infer<typeof EditorLinkStyleSchema>;
 
-export const WorldLayoutSchema = z.object({
-    "description": z.string(),
-    "enum": z.array(z.union([z.null(), z.string()])),
-});
+
+export const TextLanguageModeSchema = z.enum([
+    "LangC",
+    "LangHaxe",
+    "LangJS",
+    "LangJson",
+    "LangLog",
+    "LangLua",
+    "LangMarkdown",
+    "LangPython",
+    "LangRuby",
+    "LangXml",
+]);
+export type TextLanguageMode = z.infer<typeof TextLanguageModeSchema>;
+
+// Possible values: `DiscardOldOnes`, `PreventAdding`, `MoveLastOne`
+
+export const LimitBehaviorSchema = z.enum([
+    "DiscardOldOnes",
+    "MoveLastOne",
+    "PreventAdding",
+]);
+export type LimitBehavior = z.infer<typeof LimitBehaviorSchema>;
+
+// If TRUE, the maxCount is a "per world" limit, if FALSE, it's a "per level". Possible
+// values: `PerLayer`, `PerLevel`, `PerWorld`
+
+export const LimitScopeSchema = z.enum([
+    "PerLayer",
+    "PerLevel",
+    "PerWorld",
+]);
+export type LimitScope = z.infer<typeof LimitScopeSchema>;
+
+// Possible values: `Rectangle`, `Ellipse`, `Tile`, `Cross`
+
+export const RenderModeSchema = z.enum([
+    "Cross",
+    "Ellipse",
+    "Rectangle",
+    "Tile",
+]);
+export type RenderMode = z.infer<typeof RenderModeSchema>;
+
+// An enum describing how the the Entity tile is rendered inside the Entity bounds. Possible
+// values: `Cover`, `FitInside`, `Repeat`, `Stretch`, `FullSizeCropped`,
+// `FullSizeUncropped`, `NineSlice`
+
+export const TileRenderModeSchema = z.enum([
+    "Cover",
+    "FitInside",
+    "FullSizeCropped",
+    "FullSizeUncropped",
+    "NineSlice",
+    "Repeat",
+    "Stretch",
+]);
+export type TileRenderMode = z.infer<typeof TileRenderModeSchema>;
+
+// Checker mode Possible values: `None`, `Horizontal`, `Vertical`
+
+export const CheckerSchema = z.enum([
+    "Horizontal",
+    "None",
+    "Vertical",
+]);
+export type Checker = z.infer<typeof CheckerSchema>;
+
+// Defines how tileIds array is used Possible values: `Single`, `Stamp`
+
+export const TileModeSchema = z.enum([
+    "Single",
+    "Stamp",
+]);
+export type TileMode = z.infer<typeof TileModeSchema>;
+
+// Type of the layer as Haxe Enum Possible values: `IntGrid`, `Entities`, `Tiles`,
+// `AutoLayer`
+
+export const TypeSchema = z.enum([
+    "AutoLayer",
+    "Entities",
+    "IntGrid",
+    "Tiles",
+]);
+export type Type = z.infer<typeof TypeSchema>;
+
+
+export const EmbedAtlasSchema = z.enum([
+    "LdtkIcons",
+]);
+export type EmbedAtlas = z.infer<typeof EmbedAtlasSchema>;
+
+
+export const FlagSchema = z.enum([
+    "DiscardPreCsvIntGrid",
+    "ExportOldTableOfContentData",
+    "ExportPreCsvIntGridFormat",
+    "IgnoreBackupSuggest",
+    "MultiWorlds",
+    "PrependIndexToLevelFileNames",
+    "UseMultilinesType",
+]);
+export type Flag = z.infer<typeof FlagSchema>;
+
+
+export const BgPosSchema = z.enum([
+    "Contain",
+    "Cover",
+    "CoverDirty",
+    "Repeat",
+    "Unscaled",
+]);
+export type BgPos = z.infer<typeof BgPosSchema>;
+
+
+export const WorldLayoutSchema = z.enum([
+    "Free",
+    "GridVania",
+    "LinearHorizontal",
+    "LinearVertical",
+]);
 export type WorldLayout = z.infer<typeof WorldLayoutSchema>;
 
-export const OneOfSchema = z.object({
-    "type": z.array(ForcedRefsTypeSchema).optional(),
-    "$ref": z.string().optional(),
-});
-export type OneOf = z.infer<typeof OneOfSchema>;
+// Naming convention for Identifiers (first-letter uppercase, full uppercase etc.) Possible
+// values: `Capitalize`, `Uppercase`, `Lowercase`, `Free`
 
-export const RequiredBiomeValuesItemsSchema = z.object({
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type RequiredBiomeValuesItems = z.infer<typeof RequiredBiomeValuesItemsSchema>;
+export const IdentifierStyleSchema = z.enum([
+    "Capitalize",
+    "Free",
+    "Lowercase",
+    "Uppercase",
+]);
+export type IdentifierStyle = z.infer<typeof IdentifierStyleSchema>;
 
-export const TileRectsIdsItemsSchema = z.object({
-    "items": RequiredBiomeValuesItemsSchema,
-    "type": z.array(CustomCommandsTypeSchema),
-});
-export type TileRectsIdsItems = z.infer<typeof TileRectsIdsItemsSchema>;
+// "Image export" option when saving project. Possible values: `None`, `OneImagePerLayer`,
+// `OneImagePerLevel`, `LayersAndLevels`
 
-export const CustomCommandPropertiesSchema = z.object({
-    "when": IdentifierStyleSchema,
-    "command": AppBuildIdSchema,
-});
-export type CustomCommandProperties = z.infer<typeof CustomCommandPropertiesSchema>;
+export const ImageExportModeSchema = z.enum([
+    "LayersAndLevels",
+    "None",
+    "OneImagePerLayer",
+    "OneImagePerLevel",
+]);
+export type ImageExportMode = z.infer<typeof ImageExportModeSchema>;
 
-export const EntityReferenceInfosPropertiesSchema = z.object({
-    "worldIid": AppBuildIdSchema,
-    "entityIid": AppBuildIdSchema,
-    "layerIid": AppBuildIdSchema,
-    "levelIid": AppBuildIdSchema,
+export const LdtkCustomCommandSchema = z.object({
+    "command": z.string(),
+    "when": WhenSchema,
 });
-export type EntityReferenceInfosProperties = z.infer<typeof EntityReferenceInfosPropertiesSchema>;
+export type LdtkCustomCommand = z.infer<typeof LdtkCustomCommandSchema>;
 
-export const DefaultOverrideSchema = z.object({
-    "description": z.string(),
+export const FieldDefinitionSchema = z.object({
+    "__type": z.string(),
+    "acceptFileTypes": z.union([z.array(z.string()), z.null()]).optional(),
+    "allowedRefs": AllowedRefsSchema,
+    "allowedRefsEntityUid": z.union([z.number(), z.null()]).optional(),
+    "allowedRefTags": z.array(z.string()),
+    "allowOutOfLevelRef": z.boolean(),
+    "arrayMaxLength": z.union([z.number(), z.null()]).optional(),
+    "arrayMinLength": z.union([z.number(), z.null()]).optional(),
+    "autoChainRef": z.boolean(),
+    "canBeNull": z.boolean(),
+    "defaultOverride": z.any().optional(),
+    "doc": z.union([z.null(), z.string()]).optional(),
+    "editorAlwaysShow": z.boolean(),
+    "editorCutLongValues": z.boolean(),
+    "editorDisplayColor": z.union([z.null(), z.string()]).optional(),
+    "editorDisplayMode": EditorDisplayModeSchema,
+    "editorDisplayPos": EditorDisplayPosSchema,
+    "editorDisplayScale": z.number(),
+    "editorLinkStyle": EditorLinkStyleSchema,
+    "editorShowInWorld": z.boolean(),
+    "editorTextPrefix": z.union([z.null(), z.string()]).optional(),
+    "editorTextSuffix": z.union([z.null(), z.string()]).optional(),
+    "exportToToc": z.boolean(),
+    "identifier": z.string(),
+    "isArray": z.boolean(),
+    "max": z.union([z.number(), z.null()]).optional(),
+    "min": z.union([z.number(), z.null()]).optional(),
+    "regex": z.union([z.null(), z.string()]).optional(),
+    "searchable": z.boolean(),
+    "symmetricalRef": z.boolean(),
+    "textLanguageMode": z.union([TextLanguageModeSchema, z.null()]).optional(),
+    "tilesetUid": z.union([z.number(), z.null()]).optional(),
+    "type": z.string(),
+    "uid": z.number(),
+    "useForSmartColor": z.boolean(),
 });
-export type DefaultOverride = z.infer<typeof DefaultOverrideSchema>;
+export type FieldDefinition = z.infer<typeof FieldDefinitionSchema>;
 
-export const RealEditorValuesItemsSchema = z.object({
+export const TilesetRectangleSchema = z.object({
+    "h": z.number(),
+    "tilesetUid": z.number(),
+    "w": z.number(),
+    "x": z.number(),
+    "y": z.number(),
 });
-export type RealEditorValuesItems = z.infer<typeof RealEditorValuesItemsSchema>;
+export type TilesetRectangle = z.infer<typeof TilesetRectangleSchema>;
 
-export const GridPointPropertiesSchema = z.object({
-    "cy": AppBuildIdSchema,
-    "cx": AppBuildIdSchema,
+export const EnumValueDefinitionSchema = z.object({
+    "__tileSrcRect": z.union([z.array(z.number()), z.null()]).optional(),
+    "color": z.number(),
+    "id": z.string(),
+    "tileId": z.union([z.number(), z.null()]).optional(),
+    "tileRect": z.union([TilesetRectangleSchema, z.null()]).optional(),
 });
-export type GridPointProperties = z.infer<typeof GridPointPropertiesSchema>;
+export type EnumValueDefinition = z.infer<typeof EnumValueDefinitionSchema>;
 
-export const IntGridValueGroupDefPropertiesSchema = z.object({
-    "color": AppBuildIdSchema,
-    "uid": AppBuildIdSchema,
-    "identifier": AppBuildIdSchema,
+export const AutoLayerRuleDefinitionSchema = z.object({
+    "active": z.boolean(),
+    "alpha": z.number(),
+    "breakOnMatch": z.boolean(),
+    "chance": z.number(),
+    "checker": CheckerSchema,
+    "flipX": z.boolean(),
+    "flipY": z.boolean(),
+    "invalidated": z.boolean(),
+    "outOfBoundsValue": z.union([z.number(), z.null()]).optional(),
+    "pattern": z.array(z.number()),
+    "perlinActive": z.boolean(),
+    "perlinOctaves": z.number(),
+    "perlinScale": z.number(),
+    "perlinSeed": z.number(),
+    "pivotX": z.number(),
+    "pivotY": z.number(),
+    "size": z.number(),
+    "tileIds": z.union([z.array(z.number()), z.null()]).optional(),
+    "tileMode": TileModeSchema,
+    "tileRandomXMax": z.number(),
+    "tileRandomXMin": z.number(),
+    "tileRandomYMax": z.number(),
+    "tileRandomYMin": z.number(),
+    "tileRectsIds": z.array(z.array(z.number())),
+    "tileXOffset": z.number(),
+    "tileYOffset": z.number(),
+    "uid": z.number(),
+    "xModulo": z.number(),
+    "xOffset": z.number(),
+    "yModulo": z.number(),
+    "yOffset": z.number(),
 });
-export type IntGridValueGroupDefProperties = z.infer<typeof IntGridValueGroupDefPropertiesSchema>;
+export type AutoLayerRuleDefinition = z.infer<typeof AutoLayerRuleDefinitionSchema>;
 
-export const IntGridValueInstancePropertiesSchema = z.object({
-    "v": AppBuildIdSchema,
-    "coordId": AppBuildIdSchema,
+export const IntGridValueDefinitionSchema = z.object({
+    "color": z.string(),
+    "groupUid": z.number(),
+    "identifier": z.union([z.null(), z.string()]).optional(),
+    "tile": z.union([TilesetRectangleSchema, z.null()]).optional(),
+    "value": z.number(),
 });
-export type IntGridValueInstanceProperties = z.infer<typeof IntGridValueInstancePropertiesSchema>;
+export type IntGridValueDefinition = z.infer<typeof IntGridValueDefinitionSchema>;
 
-export const NeighbourLevelPropertiesSchema = z.object({
-    "levelIid": AppBuildIdSchema,
-    "levelUid": AppBuildIdSchema,
-    "dir": AppBuildIdSchema,
+export const IntGridValueGroupDefinitionSchema = z.object({
+    "color": z.union([z.null(), z.string()]).optional(),
+    "identifier": z.union([z.null(), z.string()]).optional(),
+    "uid": z.number(),
 });
-export type NeighbourLevelProperties = z.infer<typeof NeighbourLevelPropertiesSchema>;
-
-export const TileCustomMetadataPropertiesSchema = z.object({
-    "tileId": AppBuildIdSchema,
-    "data": AppBuildIdSchema,
-});
-export type TileCustomMetadataProperties = z.infer<typeof TileCustomMetadataPropertiesSchema>;
-
-export const TilesetRectPropertiesSchema = z.object({
-    "tilesetUid": AppBuildIdSchema,
-    "h": AppBuildIdSchema,
-    "x": AppBuildIdSchema,
-    "y": AppBuildIdSchema,
-    "w": AppBuildIdSchema,
-});
-export type TilesetRectProperties = z.infer<typeof TilesetRectPropertiesSchema>;
-
-export const TocInstanceDataPropertiesSchema = z.object({
-    "worldX": AppBuildIdSchema,
-    "widPx": AppBuildIdSchema,
-    "worldY": AppBuildIdSchema,
-    "heiPx": AppBuildIdSchema,
-    "fields": DefaultOverrideSchema,
-    "iids": DefsSchema,
-});
-export type TocInstanceDataProperties = z.infer<typeof TocInstanceDataPropertiesSchema>;
-
-export const CustomCommandsSchema = z.object({
-    "description": z.string(),
-    "items": ItemsValueSchema,
-    "type": z.array(CustomCommandsTypeSchema),
-});
-export type CustomCommands = z.infer<typeof CustomCommandsSchema>;
-
-export const FlagsSchema = z.object({
-    "description": z.string(),
-    "items": FlagsItemsSchema,
-    "type": z.array(CustomCommandsTypeSchema),
-});
-export type Flags = z.infer<typeof FlagsSchema>;
-
-export const IconSchema = z.object({
-    "description": z.string(),
-    "oneOf": z.array(OneOfSchema),
-});
-export type Icon = z.infer<typeof IconSchema>;
-
-export const RequiredBiomeValuesSchema = z.object({
-    "description": z.string(),
-    "items": RequiredBiomeValuesItemsSchema,
-    "type": z.array(CustomCommandsTypeSchema),
-});
-export type RequiredBiomeValues = z.infer<typeof RequiredBiomeValuesSchema>;
-
-export const TileRectsIdsSchema = z.object({
-    "description": z.string(),
-    "items": TileRectsIdsItemsSchema,
-    "type": z.array(CustomCommandsTypeSchema),
-});
-export type TileRectsIds = z.infer<typeof TileRectsIdsSchema>;
-
-export const CustomCommandSchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": CustomCommandPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type CustomCommand = z.infer<typeof CustomCommandSchema>;
-
-export const DefinitionsPropertiesSchema = z.object({
-    "tilesets": CustomCommandsSchema,
-    "layers": CustomCommandsSchema,
-    "levelFields": CustomCommandsSchema,
-    "enums": CustomCommandsSchema,
-    "entities": CustomCommandsSchema,
-    "externalEnums": CustomCommandsSchema,
-});
-export type DefinitionsProperties = z.infer<typeof DefinitionsPropertiesSchema>;
-
-export const EntityDefPropertiesSchema = z.object({
-    "tileId": AppBuildIdSchema,
-    "showName": AppBuildIdSchema,
-    "tilesetId": AppBuildIdSchema,
-    "maxHeight": AppBuildIdSchema,
-    "limitScope": IdentifierStyleSchema,
-    "pivotX": AppBuildIdSchema,
-    "maxCount": AppBuildIdSchema,
-    "allowOutOfBounds": AppBuildIdSchema,
-    "hollow": AppBuildIdSchema,
-    "minHeight": AppBuildIdSchema,
-    "keepAspectRatio": AppBuildIdSchema,
-    "color": AppBuildIdSchema,
-    "minWidth": AppBuildIdSchema,
-    "tileRect": IconSchema,
-    "doc": AppBuildIdSchema,
-    "fieldDefs": CustomCommandsSchema,
-    "tileRenderMode": IdentifierStyleSchema,
-    "limitBehavior": IdentifierStyleSchema,
-    "tileOpacity": AppBuildIdSchema,
-    "nineSliceBorders": RequiredBiomeValuesSchema,
-    "resizableX": AppBuildIdSchema,
-    "uiTileRect": IconSchema,
-    "uid": AppBuildIdSchema,
-    "lineOpacity": AppBuildIdSchema,
-    "maxWidth": AppBuildIdSchema,
-    "resizableY": AppBuildIdSchema,
-    "exportToToc": AppBuildIdSchema,
-    "fillOpacity": AppBuildIdSchema,
-    "height": AppBuildIdSchema,
-    "identifier": AppBuildIdSchema,
-    "pivotY": AppBuildIdSchema,
-    "renderMode": IdentifierStyleSchema,
-    "tags": RequiredBiomeValuesSchema,
-    "width": AppBuildIdSchema,
-});
-export type EntityDefProperties = z.infer<typeof EntityDefPropertiesSchema>;
-
-export const EntityInstancePropertiesSchema = z.object({
-    "iid": AppBuildIdSchema,
-    "defUid": AppBuildIdSchema,
-    "__identifier": AppBuildIdSchema,
-    "__tile": IconSchema,
-    "px": RequiredBiomeValuesSchema,
-    "__worldX": AppBuildIdSchema,
-    "__worldY": AppBuildIdSchema,
-    "__smartColor": AppBuildIdSchema,
-    "__grid": RequiredBiomeValuesSchema,
-    "__pivot": RequiredBiomeValuesSchema,
-    "fieldInstances": CustomCommandsSchema,
-    "height": AppBuildIdSchema,
-    "__tags": RequiredBiomeValuesSchema,
-    "width": AppBuildIdSchema,
-});
-export type EntityInstanceProperties = z.infer<typeof EntityInstancePropertiesSchema>;
-
-export const EntityReferenceInfosSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": EntityReferenceInfosPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type EntityReferenceInfos = z.infer<typeof EntityReferenceInfosSchema>;
-
-export const EnumDefPropertiesSchema = z.object({
-    "externalFileChecksum": AppBuildIdSchema,
-    "externalRelPath": AppBuildIdSchema,
-    "uid": AppBuildIdSchema,
-    "values": CustomCommandsSchema,
-    "iconTilesetUid": AppBuildIdSchema,
-    "identifier": AppBuildIdSchema,
-    "tags": RequiredBiomeValuesSchema,
-});
-export type EnumDefProperties = z.infer<typeof EnumDefPropertiesSchema>;
-
-export const EnumDefValuesPropertiesSchema = z.object({
-    "tileId": AppBuildIdSchema,
-    "color": AppBuildIdSchema,
-    "tileRect": IconSchema,
-    "id": AppBuildIdSchema,
-    "__tileSrcRect": RequiredBiomeValuesSchema,
-});
-export type EnumDefValuesProperties = z.infer<typeof EnumDefValuesPropertiesSchema>;
-
-export const EnumTagValuePropertiesSchema = z.object({
-    "tileIds": RequiredBiomeValuesSchema,
-    "enumValueId": AppBuildIdSchema,
-});
-export type EnumTagValueProperties = z.infer<typeof EnumTagValuePropertiesSchema>;
-
-export const FieldDefPropertiesSchema = z.object({
-    "acceptFileTypes": RequiredBiomeValuesSchema,
-    "editorDisplayScale": AppBuildIdSchema,
-    "searchable": AppBuildIdSchema,
-    "useForSmartColor": AppBuildIdSchema,
-    "editorShowInWorld": AppBuildIdSchema,
-    "allowedRefs": IdentifierStyleSchema,
-    "editorAlwaysShow": AppBuildIdSchema,
-    "arrayMinLength": AppBuildIdSchema,
-    "editorTextSuffix": AppBuildIdSchema,
-    "min": AppBuildIdSchema,
-    "__type": AppBuildIdSchema,
-    "editorDisplayMode": IdentifierStyleSchema,
-    "editorDisplayColor": AppBuildIdSchema,
-    "canBeNull": AppBuildIdSchema,
-    "autoChainRef": AppBuildIdSchema,
-    "doc": AppBuildIdSchema,
-    "allowedRefsEntityUid": AppBuildIdSchema,
-    "tilesetUid": AppBuildIdSchema,
-    "allowedRefTags": RequiredBiomeValuesSchema,
-    "symmetricalRef": AppBuildIdSchema,
-    "uid": AppBuildIdSchema,
-    "editorTextPrefix": AppBuildIdSchema,
-    "isArray": AppBuildIdSchema,
-    "exportToToc": AppBuildIdSchema,
-    "editorDisplayPos": IdentifierStyleSchema,
-    "textLanguageMode": WorldLayoutSchema,
-    "max": AppBuildIdSchema,
-    "allowOutOfLevelRef": AppBuildIdSchema,
-    "editorCutLongValues": AppBuildIdSchema,
-    "defaultOverride": DefaultOverrideSchema,
-    "editorLinkStyle": IdentifierStyleSchema,
-    "regex": AppBuildIdSchema,
-    "type": AppBuildIdSchema,
-    "identifier": AppBuildIdSchema,
-    "arrayMaxLength": AppBuildIdSchema,
-});
-export type FieldDefProperties = z.infer<typeof FieldDefPropertiesSchema>;
-
-export const RealEditorValuesSchema = z.object({
-    "description": z.string(),
-    "items": RealEditorValuesItemsSchema,
-    "type": z.array(CustomCommandsTypeSchema),
-});
-export type RealEditorValues = z.infer<typeof RealEditorValuesSchema>;
-
-export const GridPointSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": GridPointPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type GridPoint = z.infer<typeof GridPointSchema>;
-
-export const IntGridValueDefPropertiesSchema = z.object({
-    "tile": IconSchema,
-    "color": AppBuildIdSchema,
-    "identifier": AppBuildIdSchema,
-    "value": AppBuildIdSchema,
-    "groupUid": AppBuildIdSchema,
-});
-export type IntGridValueDefProperties = z.infer<typeof IntGridValueDefPropertiesSchema>;
-
-export const IntGridValueGroupDefSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": IntGridValueGroupDefPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type IntGridValueGroupDef = z.infer<typeof IntGridValueGroupDefSchema>;
-
-export const IntGridValueInstanceSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": IntGridValueInstancePropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type IntGridValueInstance = z.infer<typeof IntGridValueInstanceSchema>;
-
-export const LayerDefPropertiesSchema = z.object({
-    "pxOffsetX": AppBuildIdSchema,
-    "tilePivotX": AppBuildIdSchema,
-    "uiFilterTags": RequiredBiomeValuesSchema,
-    "displayOpacity": AppBuildIdSchema,
-    "parallaxFactorY": AppBuildIdSchema,
-    "hideInList": AppBuildIdSchema,
-    "__type": AppBuildIdSchema,
-    "guideGridHei": AppBuildIdSchema,
-    "uiColor": AppBuildIdSchema,
-    "doc": AppBuildIdSchema,
-    "tilesetDefUid": AppBuildIdSchema,
-    "canSelectWhenInactive": AppBuildIdSchema,
-    "useAsyncRender": AppBuildIdSchema,
-    "autoSourceLayerDefUid": AppBuildIdSchema,
-    "autoTilesetDefUid": AppBuildIdSchema,
-    "parallaxScaling": AppBuildIdSchema,
-    "renderInWorldView": AppBuildIdSchema,
-    "intGridValuesGroups": CustomCommandsSchema,
-    "inactiveOpacity": AppBuildIdSchema,
-    "uid": AppBuildIdSchema,
-    "excludedTags": RequiredBiomeValuesSchema,
-    "hideFieldsWhenInactive": AppBuildIdSchema,
-    "intGridValues": CustomCommandsSchema,
-    "autoRuleGroups": CustomCommandsSchema,
-    "type": IdentifierStyleSchema,
-    "identifier": AppBuildIdSchema,
-    "guideGridWid": AppBuildIdSchema,
-    "requiredTags": RequiredBiomeValuesSchema,
-    "pxOffsetY": AppBuildIdSchema,
-    "tilePivotY": AppBuildIdSchema,
-    "biomeFieldUid": AppBuildIdSchema,
-    "gridSize": AppBuildIdSchema,
-    "parallaxFactorX": AppBuildIdSchema,
-    "autoTilesKilledByOtherLayerUid": AppBuildIdSchema,
-});
-export type LayerDefProperties = z.infer<typeof LayerDefPropertiesSchema>;
-
-export const LayerInstancePropertiesSchema = z.object({
-    "__cHei": AppBuildIdSchema,
-    "pxOffsetX": AppBuildIdSchema,
-    "__tilesetRelPath": AppBuildIdSchema,
-    "iid": AppBuildIdSchema,
-    "levelId": AppBuildIdSchema,
-    "__type": AppBuildIdSchema,
-    "autoLayerTiles": CustomCommandsSchema,
-    "optionalRules": RequiredBiomeValuesSchema,
-    "__identifier": AppBuildIdSchema,
-    "__gridSize": AppBuildIdSchema,
-    "__pxTotalOffsetY": AppBuildIdSchema,
-    "intGridCsv": RequiredBiomeValuesSchema,
-    "overrideTilesetUid": AppBuildIdSchema,
-    "visible": AppBuildIdSchema,
-    "entityInstances": CustomCommandsSchema,
-    "__opacity": AppBuildIdSchema,
-    "seed": AppBuildIdSchema,
-    "layerDefUid": AppBuildIdSchema,
-    "__pxTotalOffsetX": AppBuildIdSchema,
-    "__cWid": AppBuildIdSchema,
-    "pxOffsetY": AppBuildIdSchema,
-    "__tilesetDefUid": AppBuildIdSchema,
-    "gridTiles": CustomCommandsSchema,
-    "intGrid": CustomCommandsSchema,
-});
-export type LayerInstanceProperties = z.infer<typeof LayerInstancePropertiesSchema>;
-
-export const LevelPropertiesSchema = z.object({
-    "__neighbours": CustomCommandsSchema,
-    "__bgColor": AppBuildIdSchema,
-    "worldX": AppBuildIdSchema,
-    "externalRelPath": AppBuildIdSchema,
-    "useAutoIdentifier": AppBuildIdSchema,
-    "iid": AppBuildIdSchema,
-    "bgColor": AppBuildIdSchema,
-    "bgPos": WorldLayoutSchema,
-    "pxHei": AppBuildIdSchema,
-    "worldY": AppBuildIdSchema,
-    "__bgPos": IconSchema,
-    "uid": AppBuildIdSchema,
-    "__smartColor": AppBuildIdSchema,
-    "fieldInstances": CustomCommandsSchema,
-    "pxWid": AppBuildIdSchema,
-    "identifier": AppBuildIdSchema,
-    "bgPivotY": AppBuildIdSchema,
-    "bgPivotX": AppBuildIdSchema,
-    "layerInstances": CustomCommandsSchema,
-    "bgRelPath": AppBuildIdSchema,
-    "worldDepth": AppBuildIdSchema,
-});
-export type LevelProperties = z.infer<typeof LevelPropertiesSchema>;
-
-export const LevelBgPosInfosPropertiesSchema = z.object({
-    "cropRect": RequiredBiomeValuesSchema,
-    "scale": RequiredBiomeValuesSchema,
-    "topLeftPx": RequiredBiomeValuesSchema,
-});
-export type LevelBgPosInfosProperties = z.infer<typeof LevelBgPosInfosPropertiesSchema>;
-
-export const NeighbourLevelSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": NeighbourLevelPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type NeighbourLevel = z.infer<typeof NeighbourLevelSchema>;
-
-export const TableOfContentEntryPropertiesSchema = z.object({
-    "identifier": AppBuildIdSchema,
-    "instancesData": CustomCommandsSchema,
-    "instances": CustomCommandsSchema,
-});
-export type TableOfContentEntryProperties = z.infer<typeof TableOfContentEntryPropertiesSchema>;
-
-export const TilePropertiesSchema = z.object({
-    "t": AppBuildIdSchema,
-    "d": RequiredBiomeValuesSchema,
-    "px": RequiredBiomeValuesSchema,
-    "a": AppBuildIdSchema,
-    "f": AppBuildIdSchema,
-    "src": RequiredBiomeValuesSchema,
-});
-export type TileProperties = z.infer<typeof TilePropertiesSchema>;
+export type IntGridValueGroupDefinition = z.infer<typeof IntGridValueGroupDefinitionSchema>;
 
 export const TileCustomMetadataSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": TileCustomMetadataPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+    "data": z.string(),
+    "tileId": z.number(),
 });
 export type TileCustomMetadata = z.infer<typeof TileCustomMetadataSchema>;
 
-export const TilesetDefPropertiesSchema = z.object({
-    "cachedPixelData": AppBuildIdSchema,
-    "__cHei": AppBuildIdSchema,
-    "pxHei": AppBuildIdSchema,
-    "customData": CustomCommandsSchema,
-    "tagsSourceEnumUid": AppBuildIdSchema,
-    "uid": AppBuildIdSchema,
-    "padding": AppBuildIdSchema,
-    "enumTags": CustomCommandsSchema,
-    "pxWid": AppBuildIdSchema,
-    "__cWid": AppBuildIdSchema,
-    "spacing": AppBuildIdSchema,
-    "identifier": AppBuildIdSchema,
-    "savedSelections": RequiredBiomeValuesSchema,
-    "tags": RequiredBiomeValuesSchema,
-    "embedAtlas": WorldLayoutSchema,
-    "relPath": AppBuildIdSchema,
-    "tileGridSize": AppBuildIdSchema,
-});
-export type TilesetDefProperties = z.infer<typeof TilesetDefPropertiesSchema>;
-
-export const TilesetRectSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": TilesetRectPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type TilesetRect = z.infer<typeof TilesetRectSchema>;
-
-export const TocInstanceDataSchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": TocInstanceDataPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type TocInstanceData = z.infer<typeof TocInstanceDataSchema>;
-
-export const WorldPropertiesSchema = z.object({
-    "worldGridWidth": AppBuildIdSchema,
-    "iid": AppBuildIdSchema,
-    "worldGridHeight": AppBuildIdSchema,
-    "worldLayout": WorldLayoutSchema,
-    "defaultLevelWidth": AppBuildIdSchema,
-    "levels": CustomCommandsSchema,
-    "defaultLevelHeight": AppBuildIdSchema,
-    "identifier": AppBuildIdSchema,
-});
-export type WorldProperties = z.infer<typeof WorldPropertiesSchema>;
-
-export const LdtkJsonRootPropertiesSchema = z.object({
-    "backupLimit": AppBuildIdSchema,
-    "defaultEntityWidth": AppBuildIdSchema,
-    "backupOnSave": AppBuildIdSchema,
-    "worldGridWidth": AppBuildIdSchema,
-    "iid": AppBuildIdSchema,
-    "defaultLevelBgColor": AppBuildIdSchema,
-    "bgColor": AppBuildIdSchema,
-    "worlds": CustomCommandsSchema,
-    "toc": CustomCommandsSchema,
-    "nextUid": AppBuildIdSchema,
-    "imageExportMode": IdentifierStyleSchema,
-    "identifierStyle": IdentifierStyleSchema,
-    "defaultPivotY": AppBuildIdSchema,
-    "dummyWorldIid": AppBuildIdSchema,
-    "customCommands": CustomCommandsSchema,
-    "worldGridHeight": AppBuildIdSchema,
-    "appBuildId": AppBuildIdSchema,
-    "defaultGridSize": AppBuildIdSchema,
-    "worldLayout": WorldLayoutSchema,
-    "flags": FlagsSchema,
-    "levelNamePattern": AppBuildIdSchema,
-    "exportPng": AppBuildIdSchema,
-    "defaultLevelWidth": AppBuildIdSchema,
-    "pngFilePattern": AppBuildIdSchema,
-    "__FORCED_REFS": ForcedRefsSchema,
-    "exportTiled": AppBuildIdSchema,
-    "defs": DefsSchema,
-    "levels": CustomCommandsSchema,
-    "jsonVersion": AppBuildIdSchema,
-    "defaultEntityHeight": AppBuildIdSchema,
-    "defaultPivotX": AppBuildIdSchema,
-    "defaultLevelHeight": AppBuildIdSchema,
-    "simplifiedExport": AppBuildIdSchema,
-    "externalLevels": AppBuildIdSchema,
-    "tutorialDesc": AppBuildIdSchema,
-    "minifyJson": AppBuildIdSchema,
-    "exportLevelBg": AppBuildIdSchema,
-    "backupRelPath": AppBuildIdSchema,
-});
-export type LdtkJsonRootProperties = z.infer<typeof LdtkJsonRootPropertiesSchema>;
-
-export const AutoLayerRuleGroupPropertiesSchema = z.object({
-    "name": AppBuildIdSchema,
-    "collapsed": AppBuildIdSchema,
-    "biomeRequirementMode": AppBuildIdSchema,
-    "color": AppBuildIdSchema,
-    "isOptional": AppBuildIdSchema,
-    "icon": IconSchema,
-    "usesWizard": AppBuildIdSchema,
-    "uid": AppBuildIdSchema,
-    "requiredBiomeValues": RequiredBiomeValuesSchema,
-    "active": AppBuildIdSchema,
-    "rules": CustomCommandsSchema,
-});
-export type AutoLayerRuleGroupProperties = z.infer<typeof AutoLayerRuleGroupPropertiesSchema>;
-
-export const AutoRuleDefPropertiesSchema = z.object({
-    "flipX": AppBuildIdSchema,
-    "pivotX": AppBuildIdSchema,
-    "perlinActive": AppBuildIdSchema,
-    "tileRectsIds": TileRectsIdsSchema,
-    "perlinScale": AppBuildIdSchema,
-    "outOfBoundsValue": AppBuildIdSchema,
-    "pattern": RequiredBiomeValuesSchema,
-    "tileRandomXMin": AppBuildIdSchema,
-    "checker": IdentifierStyleSchema,
-    "perlinOctaves": AppBuildIdSchema,
-    "tileIds": RequiredBiomeValuesSchema,
-    "alpha": AppBuildIdSchema,
-    "tileXOffset": AppBuildIdSchema,
-    "invalidated": AppBuildIdSchema,
-    "xModulo": AppBuildIdSchema,
-    "size": AppBuildIdSchema,
-    "chance": AppBuildIdSchema,
-    "breakOnMatch": AppBuildIdSchema,
-    "tileYOffset": AppBuildIdSchema,
-    "uid": AppBuildIdSchema,
-    "perlinSeed": AppBuildIdSchema,
-    "yOffset": AppBuildIdSchema,
-    "tileRandomYMax": AppBuildIdSchema,
-    "tileRandomYMin": AppBuildIdSchema,
-    "tileMode": IdentifierStyleSchema,
-    "flipY": AppBuildIdSchema,
-    "tileRandomXMax": AppBuildIdSchema,
-    "pivotY": AppBuildIdSchema,
-    "yModulo": AppBuildIdSchema,
-    "active": AppBuildIdSchema,
-    "xOffset": AppBuildIdSchema,
-});
-export type AutoRuleDefProperties = z.infer<typeof AutoRuleDefPropertiesSchema>;
-
-export const DefinitionsSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": DefinitionsPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type Definitions = z.infer<typeof DefinitionsSchema>;
-
-export const EntityDefSchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": EntityDefPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type EntityDef = z.infer<typeof EntityDefSchema>;
-
-export const EntityInstanceSchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": EntityInstancePropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type EntityInstance = z.infer<typeof EntityInstanceSchema>;
-
-export const EnumDefSchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": EnumDefPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type EnumDef = z.infer<typeof EnumDefSchema>;
-
-export const EnumDefValuesSchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": EnumDefValuesPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type EnumDefValues = z.infer<typeof EnumDefValuesSchema>;
-
 export const EnumTagValueSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": EnumTagValuePropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+    "enumValueId": z.string(),
+    "tileIds": z.array(z.number()),
 });
 export type EnumTagValue = z.infer<typeof EnumTagValueSchema>;
 
-export const FieldDefSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": FieldDefPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+export const FieldInstanceSchema = z.object({
+    "__identifier": z.string(),
+    "__tile": z.union([TilesetRectangleSchema, z.null()]).optional(),
+    "__type": z.string(),
+    "__value": z.any(),
+    "defUid": z.number(),
+    "realEditorValues": z.array(z.any()),
 });
-export type FieldDef = z.infer<typeof FieldDefSchema>;
+export type FieldInstance = z.infer<typeof FieldInstanceSchema>;
 
-export const FieldInstancePropertiesSchema = z.object({
-    "__type": AppBuildIdSchema,
-    "defUid": AppBuildIdSchema,
-    "__identifier": AppBuildIdSchema,
-    "__tile": IconSchema,
-    "realEditorValues": RealEditorValuesSchema,
-    "__value": DefaultOverrideSchema,
+export const ReferenceToAnEntityInstanceSchema = z.object({
+    "entityIid": z.string(),
+    "layerIid": z.string(),
+    "levelIid": z.string(),
+    "worldIid": z.string(),
 });
-export type FieldInstanceProperties = z.infer<typeof FieldInstancePropertiesSchema>;
+export type ReferenceToAnEntityInstance = z.infer<typeof ReferenceToAnEntityInstanceSchema>;
 
-export const IntGridValueDefSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": IntGridValueDefPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+export const GridPointSchema = z.object({
+    "cx": z.number(),
+    "cy": z.number(),
 });
-export type IntGridValueDef = z.infer<typeof IntGridValueDefSchema>;
+export type GridPoint = z.infer<typeof GridPointSchema>;
 
-export const LayerDefSchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": LayerDefPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+export const IntGridValueInstanceSchema = z.object({
+    "coordId": z.number(),
+    "v": z.number(),
 });
-export type LayerDef = z.infer<typeof LayerDefSchema>;
+export type IntGridValueInstance = z.infer<typeof IntGridValueInstanceSchema>;
+
+export const TileInstanceSchema = z.object({
+    "a": z.number(),
+    "d": z.array(z.number()),
+    "f": z.number(),
+    "px": z.array(z.number()),
+    "src": z.array(z.number()),
+    "t": z.number(),
+});
+export type TileInstance = z.infer<typeof TileInstanceSchema>;
+
+export const LevelBackgroundPositionSchema = z.object({
+    "cropRect": z.array(z.number()),
+    "scale": z.array(z.number()),
+    "topLeftPx": z.array(z.number()),
+});
+export type LevelBackgroundPosition = z.infer<typeof LevelBackgroundPositionSchema>;
+
+export const NeighbourLevelSchema = z.object({
+    "dir": z.string(),
+    "levelIid": z.string(),
+    "levelUid": z.union([z.number(), z.null()]).optional(),
+});
+export type NeighbourLevel = z.infer<typeof NeighbourLevelSchema>;
+
+export const LdtkTocInstanceDataSchema = z.object({
+    "fields": z.any(),
+    "heiPx": z.number(),
+    "iids": ReferenceToAnEntityInstanceSchema,
+    "widPx": z.number(),
+    "worldX": z.number(),
+    "worldY": z.number(),
+});
+export type LdtkTocInstanceData = z.infer<typeof LdtkTocInstanceDataSchema>;
+
+export const EntityDefinitionSchema = z.object({
+    "allowOutOfBounds": z.boolean(),
+    "color": z.string(),
+    "doc": z.union([z.null(), z.string()]).optional(),
+    "exportToToc": z.boolean(),
+    "fieldDefs": z.array(FieldDefinitionSchema),
+    "fillOpacity": z.number(),
+    "height": z.number(),
+    "hollow": z.boolean(),
+    "identifier": z.string(),
+    "keepAspectRatio": z.boolean(),
+    "limitBehavior": LimitBehaviorSchema,
+    "limitScope": LimitScopeSchema,
+    "lineOpacity": z.number(),
+    "maxCount": z.number(),
+    "maxHeight": z.union([z.number(), z.null()]).optional(),
+    "maxWidth": z.union([z.number(), z.null()]).optional(),
+    "minHeight": z.union([z.number(), z.null()]).optional(),
+    "minWidth": z.union([z.number(), z.null()]).optional(),
+    "nineSliceBorders": z.array(z.number()),
+    "pivotX": z.number(),
+    "pivotY": z.number(),
+    "renderMode": RenderModeSchema,
+    "resizableX": z.boolean(),
+    "resizableY": z.boolean(),
+    "showName": z.boolean(),
+    "tags": z.array(z.string()),
+    "tileId": z.union([z.number(), z.null()]).optional(),
+    "tileOpacity": z.number(),
+    "tileRect": z.union([TilesetRectangleSchema, z.null()]).optional(),
+    "tileRenderMode": TileRenderModeSchema,
+    "tilesetId": z.union([z.number(), z.null()]).optional(),
+    "uid": z.number(),
+    "uiTileRect": z.union([TilesetRectangleSchema, z.null()]).optional(),
+    "width": z.number(),
+});
+export type EntityDefinition = z.infer<typeof EntityDefinitionSchema>;
+
+export const EnumDefinitionSchema = z.object({
+    "externalFileChecksum": z.union([z.null(), z.string()]).optional(),
+    "externalRelPath": z.union([z.null(), z.string()]).optional(),
+    "iconTilesetUid": z.union([z.number(), z.null()]).optional(),
+    "identifier": z.string(),
+    "tags": z.array(z.string()),
+    "uid": z.number(),
+    "values": z.array(EnumValueDefinitionSchema),
+});
+export type EnumDefinition = z.infer<typeof EnumDefinitionSchema>;
+
+export const AutoLayerRuleGroupSchema = z.object({
+    "active": z.boolean(),
+    "biomeRequirementMode": z.number(),
+    "collapsed": z.union([z.boolean(), z.null()]).optional(),
+    "color": z.union([z.null(), z.string()]).optional(),
+    "icon": z.union([TilesetRectangleSchema, z.null()]).optional(),
+    "isOptional": z.boolean(),
+    "name": z.string(),
+    "requiredBiomeValues": z.array(z.string()),
+    "rules": z.array(AutoLayerRuleDefinitionSchema),
+    "uid": z.number(),
+    "usesWizard": z.boolean(),
+});
+export type AutoLayerRuleGroup = z.infer<typeof AutoLayerRuleGroupSchema>;
+
+export const TilesetDefinitionSchema = z.object({
+    "__cHei": z.number(),
+    "__cWid": z.number(),
+    "cachedPixelData": z.union([z.record(z.string(), z.any()), z.null()]).optional(),
+    "customData": z.array(TileCustomMetadataSchema),
+    "embedAtlas": z.union([EmbedAtlasSchema, z.null()]).optional(),
+    "enumTags": z.array(EnumTagValueSchema),
+    "identifier": z.string(),
+    "padding": z.number(),
+    "pxHei": z.number(),
+    "pxWid": z.number(),
+    "relPath": z.union([z.null(), z.string()]).optional(),
+    "savedSelections": z.array(z.record(z.string(), z.any())),
+    "spacing": z.number(),
+    "tags": z.array(z.string()),
+    "tagsSourceEnumUid": z.union([z.number(), z.null()]).optional(),
+    "tileGridSize": z.number(),
+    "uid": z.number(),
+});
+export type TilesetDefinition = z.infer<typeof TilesetDefinitionSchema>;
+
+export const EntityInstanceSchema = z.object({
+    "__grid": z.array(z.number()),
+    "__identifier": z.string(),
+    "__pivot": z.array(z.number()),
+    "__smartColor": z.string(),
+    "__tags": z.array(z.string()),
+    "__tile": z.union([TilesetRectangleSchema, z.null()]).optional(),
+    "__worldX": z.union([z.number(), z.null()]).optional(),
+    "__worldY": z.union([z.number(), z.null()]).optional(),
+    "defUid": z.number(),
+    "fieldInstances": z.array(FieldInstanceSchema),
+    "height": z.number(),
+    "iid": z.string(),
+    "px": z.array(z.number()),
+    "width": z.number(),
+});
+export type EntityInstance = z.infer<typeof EntityInstanceSchema>;
 
 export const LayerInstanceSchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": LayerInstancePropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+    "__cHei": z.number(),
+    "__cWid": z.number(),
+    "__gridSize": z.number(),
+    "__identifier": z.string(),
+    "__opacity": z.number(),
+    "__pxTotalOffsetX": z.number(),
+    "__pxTotalOffsetY": z.number(),
+    "__tilesetDefUid": z.union([z.number(), z.null()]).optional(),
+    "__tilesetRelPath": z.union([z.null(), z.string()]).optional(),
+    "__type": z.string(),
+    "autoLayerTiles": z.array(TileInstanceSchema),
+    "entityInstances": z.array(EntityInstanceSchema),
+    "gridTiles": z.array(TileInstanceSchema),
+    "iid": z.string(),
+    "intGrid": z.union([z.array(IntGridValueInstanceSchema), z.null()]).optional(),
+    "intGridCsv": z.array(z.number()),
+    "layerDefUid": z.number(),
+    "levelId": z.number(),
+    "optionalRules": z.array(z.number()),
+    "overrideTilesetUid": z.union([z.number(), z.null()]).optional(),
+    "pxOffsetX": z.number(),
+    "pxOffsetY": z.number(),
+    "seed": z.number(),
+    "visible": z.boolean(),
 });
 export type LayerInstance = z.infer<typeof LayerInstanceSchema>;
 
 export const LevelSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": LevelPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+    "__bgColor": z.string(),
+    "__bgPos": z.union([LevelBackgroundPositionSchema, z.null()]).optional(),
+    "__neighbours": z.array(NeighbourLevelSchema),
+    "__smartColor": z.string(),
+    "bgColor": z.union([z.null(), z.string()]).optional(),
+    "bgPivotX": z.number(),
+    "bgPivotY": z.number(),
+    "bgPos": z.union([BgPosSchema, z.null()]).optional(),
+    "bgRelPath": z.union([z.null(), z.string()]).optional(),
+    "externalRelPath": z.union([z.null(), z.string()]).optional(),
+    "fieldInstances": z.array(FieldInstanceSchema),
+    "identifier": z.string(),
+    "iid": z.string(),
+    "layerInstances": z.union([z.array(LayerInstanceSchema), z.null()]).optional(),
+    "pxHei": z.number(),
+    "pxWid": z.number(),
+    "uid": z.number(),
+    "useAutoIdentifier": z.boolean(),
+    "worldDepth": z.number(),
+    "worldX": z.number(),
+    "worldY": z.number(),
 });
 export type Level = z.infer<typeof LevelSchema>;
 
-export const LevelBgPosInfosSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": LevelBgPosInfosPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+export const LdtkTableOfContentEntrySchema = z.object({
+    "identifier": z.string(),
+    "instances": z.array(ReferenceToAnEntityInstanceSchema).optional(),
+    "instancesData": z.array(LdtkTocInstanceDataSchema),
 });
-export type LevelBgPosInfos = z.infer<typeof LevelBgPosInfosSchema>;
-
-export const TableOfContentEntrySchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": TableOfContentEntryPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type TableOfContentEntry = z.infer<typeof TableOfContentEntrySchema>;
-
-export const TileSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": TilePropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type Tile = z.infer<typeof TileSchema>;
-
-export const TilesetDefSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": TilesetDefPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type TilesetDef = z.infer<typeof TilesetDefSchema>;
+export type LdtkTableOfContentEntry = z.infer<typeof LdtkTableOfContentEntrySchema>;
 
 export const WorldSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": WorldPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+    "defaultLevelHeight": z.number(),
+    "defaultLevelWidth": z.number(),
+    "identifier": z.string(),
+    "iid": z.string(),
+    "levels": z.array(LevelSchema),
+    "worldGridHeight": z.number(),
+    "worldGridWidth": z.number(),
+    "worldLayout": z.union([WorldLayoutSchema, z.null()]),
 });
 export type World = z.infer<typeof WorldSchema>;
 
-export const LdtkJsonRootSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "properties": LdtkJsonRootPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+export const LayerDefinitionSchema = z.object({
+    "__type": z.string(),
+    "autoRuleGroups": z.array(AutoLayerRuleGroupSchema),
+    "autoSourceLayerDefUid": z.union([z.number(), z.null()]).optional(),
+    "autoTilesetDefUid": z.union([z.number(), z.null()]).optional(),
+    "autoTilesKilledByOtherLayerUid": z.union([z.number(), z.null()]).optional(),
+    "biomeFieldUid": z.union([z.number(), z.null()]).optional(),
+    "canSelectWhenInactive": z.boolean(),
+    "displayOpacity": z.number(),
+    "doc": z.union([z.null(), z.string()]).optional(),
+    "excludedTags": z.array(z.string()),
+    "gridSize": z.number(),
+    "guideGridHei": z.number(),
+    "guideGridWid": z.number(),
+    "hideFieldsWhenInactive": z.boolean(),
+    "hideInList": z.boolean(),
+    "identifier": z.string(),
+    "inactiveOpacity": z.number(),
+    "intGridValues": z.array(IntGridValueDefinitionSchema),
+    "intGridValuesGroups": z.array(IntGridValueGroupDefinitionSchema),
+    "parallaxFactorX": z.number(),
+    "parallaxFactorY": z.number(),
+    "parallaxScaling": z.boolean(),
+    "pxOffsetX": z.number(),
+    "pxOffsetY": z.number(),
+    "renderInWorldView": z.boolean(),
+    "requiredTags": z.array(z.string()),
+    "tilePivotX": z.number(),
+    "tilePivotY": z.number(),
+    "tilesetDefUid": z.union([z.number(), z.null()]).optional(),
+    "type": TypeSchema,
+    "uiColor": z.union([z.null(), z.string()]).optional(),
+    "uid": z.number(),
+    "uiFilterTags": z.array(z.string()),
+    "useAsyncRender": z.boolean(),
 });
-export type LdtkJsonRoot = z.infer<typeof LdtkJsonRootSchema>;
+export type LayerDefinition = z.infer<typeof LayerDefinitionSchema>;
 
-export const AutoLayerRuleGroupSchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": AutoLayerRuleGroupPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+export const DefinitionsSchema = z.object({
+    "entities": z.array(EntityDefinitionSchema),
+    "enums": z.array(EnumDefinitionSchema),
+    "externalEnums": z.array(EnumDefinitionSchema),
+    "layers": z.array(LayerDefinitionSchema),
+    "levelFields": z.array(FieldDefinitionSchema),
+    "tilesets": z.array(TilesetDefinitionSchema),
 });
-export type AutoLayerRuleGroup = z.infer<typeof AutoLayerRuleGroupSchema>;
+export type Definitions = z.infer<typeof DefinitionsSchema>;
 
-export const AutoRuleDefSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": AutoRuleDefPropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
+export const ForcedRefsSchema = z.object({
+    "AutoLayerRuleGroup": AutoLayerRuleGroupSchema.optional(),
+    "AutoRuleDef": AutoLayerRuleDefinitionSchema.optional(),
+    "CustomCommand": LdtkCustomCommandSchema.optional(),
+    "Definitions": DefinitionsSchema.optional(),
+    "EntityDef": EntityDefinitionSchema.optional(),
+    "EntityInstance": EntityInstanceSchema.optional(),
+    "EntityReferenceInfos": ReferenceToAnEntityInstanceSchema.optional(),
+    "EnumDef": EnumDefinitionSchema.optional(),
+    "EnumDefValues": EnumValueDefinitionSchema.optional(),
+    "EnumTagValue": EnumTagValueSchema.optional(),
+    "FieldDef": FieldDefinitionSchema.optional(),
+    "FieldInstance": FieldInstanceSchema.optional(),
+    "GridPoint": GridPointSchema.optional(),
+    "IntGridValueDef": IntGridValueDefinitionSchema.optional(),
+    "IntGridValueGroupDef": IntGridValueGroupDefinitionSchema.optional(),
+    "IntGridValueInstance": IntGridValueInstanceSchema.optional(),
+    "LayerDef": LayerDefinitionSchema.optional(),
+    "LayerInstance": LayerInstanceSchema.optional(),
+    "Level": LevelSchema.optional(),
+    "LevelBgPosInfos": LevelBackgroundPositionSchema.optional(),
+    "NeighbourLevel": NeighbourLevelSchema.optional(),
+    "TableOfContentEntry": LdtkTableOfContentEntrySchema.optional(),
+    "Tile": TileInstanceSchema.optional(),
+    "TileCustomMetadata": TileCustomMetadataSchema.optional(),
+    "TilesetDef": TilesetDefinitionSchema.optional(),
+    "TilesetRect": TilesetRectangleSchema.optional(),
+    "TocInstanceData": LdtkTocInstanceDataSchema.optional(),
+    "World": WorldSchema.optional(),
 });
-export type AutoRuleDef = z.infer<typeof AutoRuleDefSchema>;
-
-export const FieldInstanceSchema = z.object({
-    "title": z.string(),
-    "required": z.array(z.string()),
-    "additionalProperties": z.boolean(),
-    "properties": FieldInstancePropertiesSchema,
-    "type": z.array(ForcedRefsTypeSchema),
-});
-export type FieldInstance = z.infer<typeof FieldInstanceSchema>;
-
-export const OtherTypesSchema = z.object({
-    "TilesetRect": TilesetRectSchema,
-    "FieldInstance": FieldInstanceSchema,
-    "EntityInstance": EntityInstanceSchema,
-    "Definitions": DefinitionsSchema,
-    "EnumTagValue": EnumTagValueSchema,
-    "AutoRuleDef": AutoRuleDefSchema,
-    "FieldDef": FieldDefSchema,
-    "CustomCommand": CustomCommandSchema,
-    "EntityDef": EntityDefSchema,
-    "AutoLayerRuleGroup": AutoLayerRuleGroupSchema,
-    "IntGridValueGroupDef": IntGridValueGroupDefSchema,
-    "IntGridValueInstance": IntGridValueInstanceSchema,
-    "TocInstanceData": TocInstanceDataSchema,
-    "NeighbourLevel": NeighbourLevelSchema,
-    "LayerInstance": LayerInstanceSchema,
-    "World": WorldSchema,
-    "EntityReferenceInfos": EntityReferenceInfosSchema,
-    "TileCustomMetadata": TileCustomMetadataSchema,
-    "TilesetDef": TilesetDefSchema,
-    "EnumDefValues": EnumDefValuesSchema,
-    "Tile": TileSchema,
-    "LayerDef": LayerDefSchema,
-    "LevelBgPosInfos": LevelBgPosInfosSchema,
-    "Level": LevelSchema,
-    "TableOfContentEntry": TableOfContentEntrySchema,
-    "EnumDef": EnumDefSchema,
-    "GridPoint": GridPointSchema,
-    "IntGridValueDef": IntGridValueDefSchema,
-});
-export type OtherTypes = z.infer<typeof OtherTypesSchema>;
+export type ForcedRefs = z.infer<typeof ForcedRefsSchema>;
 
 export const TypesSchema = z.object({
-    "description": z.string(),
-    "title": z.string(),
-    "$schema": z.string(),
-    "$ref": z.string(),
-    "version": z.string(),
-    "LdtkJsonRoot": LdtkJsonRootSchema,
-    "otherTypes": OtherTypesSchema,
+    "__FORCED_REFS": ForcedRefsSchema.optional(),
+    "appBuildId": z.number(),
+    "backupLimit": z.number(),
+    "backupOnSave": z.boolean(),
+    "backupRelPath": z.union([z.null(), z.string()]).optional(),
+    "bgColor": z.string(),
+    "customCommands": z.array(LdtkCustomCommandSchema),
+    "defaultEntityHeight": z.number(),
+    "defaultEntityWidth": z.number(),
+    "defaultGridSize": z.number(),
+    "defaultLevelBgColor": z.string(),
+    "defaultLevelHeight": z.union([z.number(), z.null()]).optional(),
+    "defaultLevelWidth": z.union([z.number(), z.null()]).optional(),
+    "defaultPivotX": z.number(),
+    "defaultPivotY": z.number(),
+    "defs": DefinitionsSchema,
+    "dummyWorldIid": z.string(),
+    "exportLevelBg": z.boolean(),
+    "exportPng": z.union([z.boolean(), z.null()]).optional(),
+    "exportTiled": z.boolean(),
+    "externalLevels": z.boolean(),
+    "flags": z.array(FlagSchema),
+    "identifierStyle": IdentifierStyleSchema,
+    "iid": z.string(),
+    "imageExportMode": ImageExportModeSchema,
+    "jsonVersion": z.string(),
+    "levelNamePattern": z.string(),
+    "levels": z.array(LevelSchema),
+    "minifyJson": z.boolean(),
+    "nextUid": z.number(),
+    "pngFilePattern": z.union([z.null(), z.string()]).optional(),
+    "simplifiedExport": z.boolean(),
+    "toc": z.array(LdtkTableOfContentEntrySchema),
+    "tutorialDesc": z.union([z.null(), z.string()]).optional(),
+    "worldGridHeight": z.union([z.number(), z.null()]).optional(),
+    "worldGridWidth": z.union([z.number(), z.null()]).optional(),
+    "worldLayout": z.union([WorldLayoutSchema, z.null()]).optional(),
+    "worlds": z.array(WorldSchema),
 });
 export type Types = z.infer<typeof TypesSchema>;

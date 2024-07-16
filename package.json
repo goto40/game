@@ -20,7 +20,7 @@
         "test": "vitest",
         "test-run": "vitest --run",
         "coverage": "vitest --coverage",
-        "generate-types": "quicktype -l typescript-zod src/LDtk.json -o src/types.ts"
+        "generate-types": "quicktype --src-lang schema -l typescript-zod src/LDtk.json -o src/types.ts"
     },
     "devDependencies": {
         "@vitest/coverage-v8": "^2.0.3",
