@@ -45,5 +45,16 @@ export class MainMenu extends Scene
         button2.once('pointerdown', () => {
             this.scene.start('Game2');
         });
+
+        const button3 = this.add.text(512, 760, `Start3`, {
+            fontFamily: 'Monospace', fontSize: 50, color: '#ffaaff',
+            stroke: '#000000', strokeThickness: 8,
+            align: 'center'
+        }).setOrigin(0.5);
+        button3.setInteractive();
+        button3.once('pointerdown', () => {
+            this.scene.start('Game3');
+        });
+
     }
 }

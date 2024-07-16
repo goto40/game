@@ -28,4 +28,12 @@
     "exclude": [
         "src/service-worker.ts"
     ],
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        },
+        {
+            "path": "./tsconfig.sw.json"
+        }
+    ]
 }

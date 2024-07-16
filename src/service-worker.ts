@@ -15,6 +15,8 @@
     './assets/bg.png',
     './assets/bg2.png',
     './assets/phaser.js',
+    './assets/nature-paltformer-tileset-16x16.png',
+    './assets/nature.ldtk',
   ];
   
   async function fillCache() {
