@@ -10,4 +10,7 @@ test('parse ldtk', () => {
   expect(typeof json).toBe('object');
   const parseResult = TypesSchema.parse(json);
   expect(parseResult).toBeDefined();
+
+  expect(parseResult.levels.length).toBeGreaterThan(0);
+  expect(parseResult.levels.at(0)?.layerInstances?.length).toBeGreaterThan(0);
 });
